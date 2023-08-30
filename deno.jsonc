@@ -54,6 +54,8 @@
     "test:run": "deno test --unstable --parallel --coverage=./etc/coverage/",
     "test:coverage": "deno coverage ./etc/coverage/",
     "test:generate-lcov": "deno coverage ./etc/coverage --lcov > ./etc/coverage/cov_profile.lcov",
-    "cli": "cd ./src/ && deno repl --unstable --allow-all --eval-file=./cli-init.ts && cd ../"
+    "cli": "cd ./src/ && deno repl --unstable --allow-all --eval-file=./cli-init.ts && cd ../",
+    "seed": "deno run --unstable --allow-all ./src/data/seed.ts",
+    "deploy": "export $(grep -v '^#' .env.local | xargs -0) && deployctl deploy --project=$DENO_DEPLOY_PROJECT_ID ./src/main.ts"
   }
 }
