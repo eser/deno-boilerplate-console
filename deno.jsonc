@@ -1,62 +1,59 @@
 {
-  "importMap": "./import-map.json",
   "compilerOptions": {
     "allowJs": true,
-    "emitDecoratorMetadata": true,
+    "allowArbitraryExtensions": true,
+    "checkJs": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
     "strict": true
   },
+  "lock": true,
+  "imports": {
+    "$std/": "https://deno.land/std@0.200.0/",
+    "$hex/": "https://deno.land/x/hex@0.6.5/src/",
+    "$ulid/": "https://deno.land/x/ulid@v0.3.0/",
+    "$zod/": "https://deno.land/x/zod@v3.22.2/"
+  },
   "lint": {
-    "files": {
-      "include": [
-        "src/",
-        "mod.ts",
-        "*.md",
-        "*.json"
-      ],
-      "exclude": []
-    },
     "rules": {
       "tags": [
         "recommended"
-      ],
-      "include": [],
-      "exclude": []
-    }
+      ]
+    },
+    "exclude": [
+      "tmp/"
+    ]
   },
   "fmt": {
-    "files": {
-      "include": [
-        "src/",
-        "mod.ts",
-        "*.md",
-        "*.json"
-      ],
-      "exclude": []
-    }
+    "exclude": [
+      "tmp/"
+    ]
   },
   "test": {
     "files": {
       "include": [
         "src/**/*.test.[js,jsx,ts,tsx]"
-      ],
-      "exclude": []
+      ]
     }
   },
   "bench": {
     "files": {
       "include": [
         "src/**/*.bench.[js,jsx,ts,tsx]"
-      ],
-      "exclude": []
+      ]
     }
   },
   "tasks": {
-    "cleanup": "rm deno.lock && deno cache --reload ./src/main.ts",
-    "start": "deno run ./src/main.ts",
-    "dev": "deno run --watch ./src/main.ts",
-    "test": "deno test ./src/ --parallel --coverage=./etc/coverage",
-    "test:coverage": "deno coverage ./etc/coverage",
+    "cleanup": "rm deno.lock && deno cache --unstable --reload ./src/mod.ts",
+    "start": "deno run --unstable ./src/main.ts",
+    "dev": "deno run --unstable --watch ./src/main.ts",
+    "check": "deno run --unstable --check --reload ./src/mod.ts",
+    "test": "deno test --unstable --parallel --watch",
+    "test:run": "deno test --unstable --parallel --coverage=./etc/coverage/",
+    "test:coverage": "deno coverage ./etc/coverage/",
     "test:generate-lcov": "deno coverage ./etc/coverage --lcov > ./etc/coverage/cov_profile.lcov",
-    "bench": "deno bench ./src/"
+    "cli": "cd ./src/ && deno repl --unstable --allow-all --eval-file=./cli-init.ts && cd ../"
   }
 }

@@ -1,0 +1,75 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+    branches:
+      - "**"
+
+  # schedule:
+  #   - cron: "18 21 * * 6"
+
+jobs:
+  integration:
+    name: Integration
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    strategy:
+      matrix:
+        deno-version:
+          - 1.36.3
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 2
+
+      - name: Setup Deno ${{ matrix.deno-version }}
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: ${{ matrix.deno-version }}
+
+      - name: Verify formatting
+        run: deno fmt --check
+
+      - name: Lint
+        run: deno lint
+
+      - name: Check if modules are broken
+        run: deno task check
+
+      - name: Run tests
+        run: deno task test:run
+
+  # deployment:
+  #   name: Deployment
+  #   runs-on: ubuntu-latest
+
+  #   needs: integration
+  #   if: success() && github.ref == 'refs/heads/main'
+
+  #   permissions:
+  #     id-token: write
+  #     contents: read
+
+  #   steps:
+  #     - name: Clone repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Upload to Deno Deploy
+  #       uses: denoland/deployctl@v1
+  #       with:
+  #         project: deno-boilerplate-console
+  #         entrypoint: ./src/mod.ts

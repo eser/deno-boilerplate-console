@@ -7,8 +7,9 @@ Thumbs.db
 # Editor metadata
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
 !.vscode/settings.json
-.idea/
+.idea/*
 
 # local API keys and secrets
 .env.local
@@ -22,5 +23,9 @@ Thumbs.db
 *.swp
 
 # coverage files
-etc/coverage/*.json
-etc/coverage/cov_profile.lcov
+/etc/coverage/*.json
+/etc/coverage/cov_profile.lcov
+
+# temporary files
+/tmp/*
+!/tmp/.gitkeep

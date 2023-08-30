@@ -1,5 +1,5 @@
-import { assertEquals } from "@deno-std/testing/asserts.ts";
-import { describe, it } from "@deno-std/testing/bdd.ts";
+import { assertEquals } from "$std/assert/mod.ts";
+import { describe, it } from "$std/testing/bdd.ts";
 import { add } from "./main.ts";
 
 describe("add", () => {

@@ -23,7 +23,7 @@ repos:
       - id: local-precommit
         name: local pre-commit tasks
         description: Runs local pre-commit tasks.
-        entry: bash -c 'deno run -A pre-commit.ts; git add -u' --
+        entry: bash -c 'deno run --unstable --allow-all ./pre-commit.ts; git add -u' --
         always_run: true
         pass_filenames: false
         language: system
@@ -32,7 +32,18 @@ repos:
         entry: filenames must be kebab-case only
         language: fail
         files: '[^a-z0-9.\-\/\[\]\@]'
-        exclude: '^[A-Z0-9\_\/\[\]\@]+(.md|)$'
+        exclude: |
+          (?x)^(
+            .github/ISSUE_TEMPLATE/bug_report.md|
+            .github/ISSUE_TEMPLATE/feature_request.md|
+            .github/PULL_REQUEST_TEMPLATE.md|
+            .github/FUNDING.yml|
+            CODE_OF_CONDUCT.md|
+            LICENSE|
+            README.md|
+            SECURITY.md|
+            Dockerfile
+          )$
       - id: deno-fmt-check
         name: deno formatter check
         description: Auto-format JavaScript, TypeScript, Markdown, and JSON files.
@@ -50,7 +61,7 @@ repos:
       - id: deno-test
         name: deno test
         description: Run tests using Deno's built-in test runner.
-        entry: deno task test
+        entry: deno task test:run
         types_or: [javascript, jsx, ts, tsx, json]
         pass_filenames: false
         language: system
