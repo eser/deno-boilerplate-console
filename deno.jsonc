@@ -32,18 +32,14 @@
     ]
   },
   "test": {
-    "files": {
-      "include": [
-        "src/**/*.test.[js,jsx,ts,tsx]"
-      ]
-    }
+    "include": [
+      "src/**/*.test.[js,jsx,ts,tsx]"
+    ]
   },
   "bench": {
-    "files": {
-      "include": [
-        "src/**/*.bench.[js,jsx,ts,tsx]"
-      ]
-    }
+    "include": [
+      "src/**/*.bench.[js,jsx,ts,tsx]"
+    ]
   },
   "tasks": {
     "cleanup": "rm deno.lock && deno cache --unstable --reload ./src/mod.ts",
